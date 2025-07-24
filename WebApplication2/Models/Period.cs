@@ -1,0 +1,66 @@
+namespace WebApplication2.Models;
+
+public class Period
+{
+    public DateTime StartDate { get; }
+    public DateTime EndDate { get; }
+
+    public Period(DateTime startDate, DateTime endDate)
+    {
+        if (startDate > endDate)
+            throw new ArgumentException("Start date cannot be after end date");
+        
+        StartDate = startDate;
+        EndDate = endDate;
+    }
+
+    public int Days => (EndDate - StartDate).Days + 1;
+
+    public bool OverlapsWith(string yearMonth)
+    {
+        var year = int.Parse(yearMonth.Substring(0, 4));
+        var month = int.Parse(yearMonth.Substring(4, 2));
+        
+        var monthStart = new DateTime(year, month, 1);
+        var monthEnd = new DateTime(year, month, DateTime.DaysInMonth(year, month));
+
+        return StartDate <= monthEnd && EndDate >= monthStart;
+    }
+
+    public Period GetOverlapWith(string yearMonth)
+    {
+        var year = int.Parse(yearMonth.Substring(0, 4));
+        var month = int.Parse(yearMonth.Substring(4, 2));
+        
+        var monthStart = new DateTime(year, month, 1);
+        var monthEnd = new DateTime(year, month, DateTime.DaysInMonth(year, month));
+
+        var overlapStart = StartDate > monthStart ? StartDate : monthStart;
+        var overlapEnd = EndDate < monthEnd ? EndDate : monthEnd;
+
+        return new Period(overlapStart, overlapEnd);
+    }
+
+    public static List<Period> CreateMonthlyPeriods(DateTime startTime, DateTime endTime)
+    {
+        var periods = new List<Period>();
+        
+        var startMonth = new DateTime(startTime.Year, startTime.Month, 1);
+        var endMonth = new DateTime(endTime.Year, endTime.Month, 1);
+
+        var currentMonth = startMonth;
+        while (currentMonth <= endMonth)
+        {
+            var daysInMonth = DateTime.DaysInMonth(currentMonth.Year, currentMonth.Month);
+            var monthEnd = new DateTime(currentMonth.Year, currentMonth.Month, daysInMonth);
+
+            var periodStart = (currentMonth == startMonth) ? startTime : currentMonth;
+            var periodEnd = (currentMonth == endMonth) ? endTime : monthEnd;
+
+            periods.Add(new Period(periodStart, periodEnd));
+            currentMonth = currentMonth.AddMonths(1);
+        }
+
+        return periods;
+    }
+} 
