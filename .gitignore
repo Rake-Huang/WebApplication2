@@ -1,0 +1,55 @@
+# Build Folders
+bin/
+obj/
+
+# Dependencies
+.nuget/
+packages/
+
+# Visual Studio files
+.vs/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# Rider
+.idea/
+*.sln.DotSettings.user
+
+# .NET Core
+*.runtimeconfig.json
+*.deps.json
+appsettings.Development.json
+.vscode/
+
+# Test
+TestResults/
+*.trx
+coverage.xml
+*.coverage
+*.coveragexml
+
+# Logs
+logs/
+*.log
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Environment variables
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Temporary files
+*.tmp
+*.temp 
