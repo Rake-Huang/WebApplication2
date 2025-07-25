@@ -15,15 +15,6 @@ public class Budget
         return (decimal)Amount / daysInMonth;
     }
 
-    public decimal GetAmountForPeriod(Period period)
-    {
-        if (!period.OverlapsWith(YearMonth))
-            return 0;
-
-        var overlap = period.GetOverlapWith(YearMonth);
-        return GetDailyAmount() * overlap.Days;
-    }
-
     public static decimal GetTotalAmount(IEnumerable<Budget> budgets, DateTime startTime, DateTime endTime)
     {
         if (startTime > endTime)
@@ -39,7 +30,7 @@ public class Budget
             var yearMonth = period.StartDate.ToString("yyyyMM");
             if (budgetDict.TryGetValue(yearMonth, out var budget))
             {
-                totalAmount += budget.GetAmountForPeriod(period);
+                totalAmount += budget.GetDailyAmount() * period.Days;
             }
         }
 
