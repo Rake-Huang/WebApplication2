@@ -11,7 +11,7 @@ public class Period
         EndDate = endDate;
     }
 
-    public int Days => (EndDate - StartDate).Days + 1;
+    public int OverLappingDays => (EndDate - StartDate).Days + 1;
 
     public static List<Period> CreateMonthlyPeriods(DateTime startTime, DateTime endTime)
     {

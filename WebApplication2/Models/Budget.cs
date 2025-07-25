@@ -30,7 +30,7 @@ public class Budget
             var yearMonth = period.StartDate.ToString("yyyyMM");
             if (budgetDict.TryGetValue(yearMonth, out var budget))
             {
-                totalAmount += budget.GetDailyAmount() * period.Days;
+                totalAmount += budget.GetDailyAmount() * period.OverLappingDays;
             }
         }
 
