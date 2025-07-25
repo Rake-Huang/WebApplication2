@@ -7,9 +7,6 @@ public class Period
 
     public Period(DateTime startDate, DateTime endDate)
     {
-        if (startDate > endDate)
-            throw new ArgumentException("Start date cannot be after end date");
-        
         StartDate = startDate;
         EndDate = endDate;
     }
